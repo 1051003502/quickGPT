@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QuickGPT-快速创建你的GPT应用</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/plugins/bootstrap-3.4.1-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/plugins/fontawesome-free-5.15.4-web/css/all.css">
+    <style>
+        .copyright{
+            background-color: #5e5e5e;
+            height: 50px;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+        }
+    </style>
+
+</head>
+<body>
+<nav class="navbar navbar-default" style="margin-bottom: 0">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/quickgpt/index">QuickGPT</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="#">介绍 <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">充值</a></li>
+                <li><a href="#">联系我们</a></li>
+                <li><a href="#">加入我们</a></li>
+                <!--                <li class="dropdown">-->
+                <!--                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"-->
+                <!--                       aria-expanded="false">Dropdown <span class="caret"></span></a>-->
+                <!--                    <ul class="dropdown-menu">-->
+                <!--                        <li><a href="#">Action</a></li>-->
+                <!--                        <li><a href="#">Another action</a></li>-->
+                <!--                        <li><a href="#">Something else here</a></li>-->
+                <!--                        <li role="separator" class="divider"></li>-->
+                <!--                        <li><a href="#">Separated link</a></li>-->
+                <!--                        <li role="separator" class="divider"></li>-->
+                <!--                        <li><a href="#">One more separated link</a></li>-->
+                <!--                    </ul>-->
+                <!--                </li>-->
+            </ul>
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="寻找应用">
+                </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Link</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">我的 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+
+</nav>
+
+
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="text-center">Quick GPT</h1>
+        <p class="text-center"><i class="fa fa-th-list" aria-hidden="true"></i>快速创建你的GPT应用！</p>
+        <p class="text-center">
+            <a class="btn btn-primary btn-lg" href="/quickgpt/createAPP" role="button">开始创建</a>
+        </p>
+
+    </div>
+</div>
+
+<div class="container" >
+
+
+<div class="row">
+
+    {% for dic in app_data %}
+
+    <div class="col-md-3">
+        <div class="thumbnail" onclick="chat(this)" app_id={{dic.id}} app_name={{dic.app_name}}
+             app_introduction={{dic.app_introduction}} app_prompt={{dic.prompt}} app_example={{dic.example}}>
+            <div class="caption">
+                <h3>{{dic.app_name}} </h3>
+                <p style="overflow:hidden;height: 80px">{{dic.app_introduction}}</p>
+                <p class="text-center"><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#"
+                                                                                                       class="btn btn-default"
+                                                                                                       role="button">Button</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endfor%}
+
+
+    <div class="col-md-3">
+        <div class="thumbnail" >
+            <div class="caption">
+                <h3>万能道歉信 </h3>
+                <p style="overflow:hidden;height: 80px">专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定。</p>
+                <p class="text-center"><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#"
+                                                                                                       class="btn btn-default"
+                                                                                                       role="button">Button</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="thumbnail" >
+            <div class="caption">
+                <h3>万能道歉信 </h3>
+                <p style="overflow:hidden;height: 80px">专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定。</p>
+                <p class="text-center"><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#"
+                                                                                                       class="btn btn-default"
+                                                                                                       role="button">Button</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="thumbnail" >
+            <div class="caption">
+                <h3>万能道歉信 </h3>
+                <p style="overflow:hidden;height: 80px">专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定。</p>
+                <p class="text-center"><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#"
+                                                                                                       class="btn btn-default"
+                                                                                                       role="button">Button</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="thumbnail" >
+            <div class="caption">
+                <h3>万能道歉信 </h3>
+                <p style="overflow:hidden;height: 80px">专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定。</p>
+                <p class="text-center"><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#"
+                                                                                                       class="btn btn-default"
+                                                                                                       role="button">Button</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="thumbnail" >
+            <div class="caption">
+                <h3>万能道歉信 </h3>
+                <p style="overflow:hidden;height: 80px">专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定。</p>
+                <p class="text-center"><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#"
+                                                                                                       class="btn btn-default"
+                                                                                                       role="button">Button</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="thumbnail" >
+            <div class="caption">
+                <h3>万能道歉信 </h3>
+                <p style="overflow:hidden;height: 80px">专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定。</p>
+                <p class="text-center"><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#"
+                                                                                                       class="btn btn-default"
+                                                                                                       role="button">Button</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="thumbnail" >
+            <div class="caption">
+                <h3>万能道歉信 </h3>
+                <p style="overflow:hidden;height: 80px">专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定。</p>
+                <p class="text-center"><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#"
+                                                                                                       class="btn btn-default"
+                                                                                                       role="button">Button</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="thumbnail" >
+            <div class="caption">
+                <h3>万能道歉信 </h3>
+                <p style="overflow:hidden;height: 80px">所有说不出口的道歉，一键搞定。</p>
+                <p class="text-center"><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#"
+                                                                                                       class="btn btn-default"
+                                                                                                       role="button">Button</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="thumbnail" >
+            <div class="caption">
+                <h3>万能道歉信 </h3>
+                <p style="overflow:hidden;height: 80px">专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定专业级道歉信，适合男女朋友、公司同事、老板领导、家人亲戚？老师同学…所有说不出口的道歉，一键搞定。</p>
+                <p class="text-center"><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#"
+                                                                                                       class="btn btn-default"
+                                                                                                       role="button">Button</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+<div class="copyright">
+蓝精灵 版权所有 Copyright  2023
+</div>
+
+<script src="/static/js/jquery-3.6.4.js"></script>
+<script src="/static/plugins/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
+
+<script>
+        function chat(self) {
+            console.log($(self).attr("app_id"));
+            console.log("chat()");
+            window.location.href="/quickgpt/chat?"+
+                "app_id="+$(self).attr("app_id")+"&"+
+                "app_name="+$(self).attr("app_name")+"&"+
+                "app_introduction="+$(self).attr("app_introduction")+"&"+
+                "app_prompt="+$(self).attr("app_prompt")+"&"+
+                "app_example="+$(self).attr("app_example");
+
+        }
+</script>
+</body>
+</html>

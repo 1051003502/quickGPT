@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>图像生成网站</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/plugins/bootstrap-3.4.1-dist/css/bootstrap.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            margin-top: 20px;
+        }
+
+        .sketch-preview {
+            height: 300px;
+            border: 1px solid #ddd;
+        }
+
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .image-container .card {
+            margin: 10px;
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .image-container .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sketch-buttons {
+            margin-top: 10px;
+        }
+
+        .sketch-buttons button {
+            margin-right: 10px;
+        }
+
+    </style>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">图像生成网站</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>绘制草图</h1>
+    <div class="row">
+        <div class="col-lg-6">
+            <canvas id="sketch-canvas"></canvas>
+            <div class="sketch-buttons">
+                <button id="clear-button" class="btn btn-danger">清空</button>
+                <button id="undo-button" class="btn btn-secondary">撤销</button>
+                <button id="redo-button" class="btn btn-secondary">恢复</button>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <h3>草图预览</h3>
+            <div id="sketch-preview" class="card sketch-preview">
+                <div class="card-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <h1>生成图像</h1>
+    <form id="generate-form" action="{{ url_for('generate') }}" method="post">
+        <div class="form-group">
+            <label for="model">选择模型</label>
+            <select name="model" id="model" class="form-control">
+                <option value="model1">模型1</option>
+                <option value="model2">模型2</option>
+                <option value="model3">模型3</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">生成</button>
+    </form>
+
+    <hr>
+
+    <h1>生成的图像</h1>
+    <div class="image-container">
+        {% for image in images %}
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/' + image.filename) }}" class="card-img-top">
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.cn/npm/jquery@1.12.4/dist/jquery.min.js"
+        integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+        crossorigin="anonymous"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+        crossorigin="anonymous"></script>
+
+<script src="https://unpkg.com/fabric@5.3.0/dist/fabric.min.js"></script>
+<script>
+    // 初始化草图绘制区域
+    var canvas = new fabric.Canvas('sketch-canvas', {
+        isDrawingMode: true,
+        freeDrawingBrush: new fabric.PencilBrush(canvas),
+        backgroundColor: '#fff',
+        width: 400,
+        height: 300
+    });
+
+    // 更新草图预览
+    function updateSketchPreview() {
+        var dataUrl = canvas.toDataURL();
+        $('#sketch-preview .card-body').css('background-image', 'url(' + dataUrl + ')');
+    }
+
+    // 绑定清空按钮事件
+    $('#clear-button').click(function () {
+        canvas.clear();
+        updateSketchPreview();
+    });
+
+    // 绑定撤销按钮事件
+    $('#undo-button').click(function () {
+        canvas.undo();
+        updateSketchPreview();
+    });
+
+    // 绑定恢复按钮事件
+    $('#redo-button').click(function () {
+        canvas.redo();
+        updateSketchPreview();
+    });
+
+    // 监听草图绘制事件
+    canvas.on('path:created', function () {
+        updateSketchPreview();
+    });
+
+    // 绑定表单提交事件
+    $('#generate-form').submit(function (e) {
+        e.preventDefault();
+        var dataUrl = canvas.toDataURL();
+        $('#generate-form').append('<input type="hidden" name="sketch" value="' + dataUrl + '">');
+        $('#generate-form').submit();
+    });
+
+</script>
+</body>
+</html>
