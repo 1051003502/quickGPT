@@ -29,19 +29,22 @@ def addAPPtoDB():
     # request.form
     pass
 
-openai.api_key = "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"
 
+openai.api_key=os.getenv("openAI_API_key")
 # 设置 Flask 应用的根路径
 @app.route('/quickgpt/chat')
 def index():
     return render_template("chat.html")
     # return app.send_static_file('chat.html')
 
+
 # 接收前端发送的聊天请求
 @app.route('/api/chat', methods=['POST'])
 def chat():
-    test_mark=True
+    test_mark=False
     if test_mark:
+        print(request.form['user_message'])
+        return {"bot_message":request.form['user_message']}
         return {'bot_message':"我很快乐 我很快乐 我很快乐 我很快乐 我很快乐 我很快乐 我很快乐 我很快乐 我很快乐 我很快乐我很快乐 我很快乐 我很快乐 我很快乐 我很快乐我很快乐 我很快乐 我很快乐 我很快乐 我很快乐我很快乐 我很快乐 我很快乐 我很快乐 我很快乐我很快乐 我很快乐 我很快乐 我很快乐 我很快乐"}
     text = request.form['user_message']
     # 调用 OpenAI API 进行聊天
@@ -77,4 +80,4 @@ def chat():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')

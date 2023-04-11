@@ -139,9 +139,9 @@
         }
 
     </style>
-    <script>
 
-    </script>
+
+
 </head>
 <body>
 <nav class="navbar navbar-default" style="margin-bottom: 0px">
@@ -212,7 +212,7 @@
                 </div>
                 <div class="chat-body" id="chat-box">
                     <div class="message received" >
-                        <p>您好，请问有什么可以帮您的吗？</p>
+                        <p id="p_app_introduction">您好，请问有什么可以帮您的吗？</p>
                     </div>
                 </div>
                 <div class="chat-footer">
@@ -227,32 +227,41 @@
 <script src="/static/js/jquery-3.6.4.js"></script>
 <script src="/static/plugins/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
 <script>
-    $("#chat_window_title").text("haha")
+    const urlParams = new URLSearchParams(window.location.search);
+    const app_id = urlParams.get('app_id');
+    const app_name = urlParams.get('app_name');
+    const app_introduction = urlParams.get('app_introduction');
+    const app_prompt = urlParams.get('app_prompt');
+    const app_example = urlParams.get('app_example');
+    $("#chat_window_title").text(app_name)
+    //$("#user-message").attr("placeholder","示例："+app_example)
+    $("#p_app_introduction").text(app_introduction)
+
+</script>
+<script>
+    var total_user_message=app_prompt;
     function sendMessage() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const app_id = urlParams.get('app_id');
-        const app_name = urlParams.get('app_name');
-        const app_introduction = urlParams.get('app_introduction');
-        const app_prompt = urlParams.get('app_prompt');
-        const app_example = urlParams.get('app_example');
         console.log(app_id)
         console.log(app_name)
         console.log(app_introduction)
         console.log(app_prompt)
         console.log(app_example)
-for (const [key, value] of urlParams) {
-    console.log(value)
-}
-        var userMessage = $('#user-message').val();
-        if (userMessage.trim() === '') {
+        one_message = $('#user-message').val();
+        if (one_message.trim() === '') {
             return;
         }
-        $('#chat-box').append('<p><strong>我:</strong> ' + userMessage + '</p>');
+        if(total_user_message!=""){
+            total_user_message=total_user_message+"\n"+one_message;
+        }else{
+            total_user_message=one_message;
+        }
+        $('#chat-box').append('<p><strong>我:</strong> ' + one_message + '</p>');
         $('#user-message').val('');
+
         $.ajax({
             type: 'POST',
             url: '/api/chat',
-            data: {'user_message': userMessage},
+            data: {'user_message': total_user_message},
             success: function (response) {
                 var botMessage = response.bot_message;
                 $('#chat-box').append('<p><strong>机器人:</strong> ' + botMessage + '</p>');
