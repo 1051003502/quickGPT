@@ -1,8 +1,10 @@
-from flask import Flask, request, jsonify,render_template
 import openai
 import os
-app = Flask(__name__)
+from flask import Flask, request, jsonify,render_template
 from mysql import get_app_data_from_dataset, insert_app_data_to_dataset
+from gpt_api import chat_once,chat_once_with_sb,ChatGPT,chat_once_with_prompt
+app = Flask(__name__)
+
 
 
 @app.route("/quickgpt/index", methods=['GET'])
@@ -11,6 +13,11 @@ def get_quickgpt_index():
     print(app_data)
     return render_template("quickgpt.html", app_data=app_data)
 
+@app.route("/", methods=['GET'])
+def get_quickgpt_index2():
+    app_data = get_app_data_from_dataset()
+    print(app_data)
+    return render_template("quickgpt.html", app_data=app_data)
 
 @app.route("/quickgpt/createAPP")
 def createAPP():
@@ -46,35 +53,18 @@ def chat():
         print(request.form['user_message'])
         return {"bot_message":request.form['user_message']}
         return {'bot_message':"我很快乐 我很快乐 我很快乐 我很快乐 我很快乐 我很快乐 我很快乐 我很快乐 我很快乐 我很快乐我很快乐 我很快乐 我很快乐 我很快乐 我很快乐我很快乐 我很快乐 我很快乐 我很快乐 我很快乐我很快乐 我很快乐 我很快乐 我很快乐 我很快乐我很快乐 我很快乐 我很快乐 我很快乐 我很快乐"}
-    text = request.form['user_message']
-    # 调用 OpenAI API 进行聊天
-    #text-davinci-002
-
-    # response = openai.Completion.create(
-    #     engine="gpt-3.5-turbo",
-    #     prompt=(f"Conversation with GPT3.5 Turbo:\nUser: {text}\nGPT:"),
-    #     max_tokens=1024,
-    #     n=1,
-    #     stop=None,
-    #     temperature=0.5,
-    # )
-
-
-    rsp = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "一个霸道总裁"},
-            {"role": "user", "content": text}
-        ]
-    )
-    print(rsp)
-    message = rsp.get("choices")[0]["message"]["content"]
+    prompt=request.form['prompt']
+    user_message = request.form['user_message']
+    print("/api/chat")
+    print("prompt:",prompt)
+    print("user_message:", user_message)
+    response=chat_once_with_prompt(prompt,user_message)
 
     # 获取聊天结果
     #message = response.choices[0].text.strip()
     # 返回聊天结果给前端
     return {
-        'bot_message': message
+        'bot_message': response
     }
 
 

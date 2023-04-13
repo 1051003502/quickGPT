@@ -250,18 +250,14 @@
         if (one_message.trim() === '') {
             return;
         }
-        if(total_user_message!=""){
-            total_user_message=total_user_message+"\n"+one_message;
-        }else{
-            total_user_message=one_message;
-        }
+
         $('#chat-box').append('<p><strong>我:</strong> ' + one_message + '</p>');
         $('#user-message').val('');
 
         $.ajax({
             type: 'POST',
             url: '/api/chat',
-            data: {'user_message': total_user_message},
+            data: {'prompt':app_prompt,'user_message': one_message},
             success: function (response) {
                 var botMessage = response.bot_message;
                 $('#chat-box').append('<p><strong>机器人:</strong> ' + botMessage + '</p>');

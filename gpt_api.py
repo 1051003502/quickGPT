@@ -45,6 +45,19 @@ def chat_once(prompt):
     except:
         return ""
 
+def chat_once_with_prompt(prompt,message):
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "user", "content": prompt},
+                {"role": "user", "content": message}
+            ]
+        )
+        return response.get("choices")[0]["message"]["content"]
+    except:
+        return ""
+
 def chat_once_with_sb(prompt,sb): #sb:some body 不是骂人
     try:
         response = openai.ChatCompletion.create(
@@ -80,5 +93,21 @@ class ChatGPT:
 def test_chat_once():
     res=chat_once("你好")
     print(res)
+
+def test_chat_once_with_sb():
+    prompt="请问你擅长什么？"
+    sb="医生"
+    res=chat_once_with_sb(prompt,sb)
+    print(res)
+
+def test_ChatGPT():
+    chatgpt=ChatGPT()
+    while True:
+        text=input()
+        if(text==""):break
+        res=chatgpt.send(text)
+        print(res)
+
+
 if __name__ == '__main__':
-    test_chat_once()
+    test_chat_once_with_sb()
