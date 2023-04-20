@@ -1,8 +1,8 @@
 import pymysql
 
-
+dataset_host="121.250.213.16"
 def get_app_data_from_dataset():
-    conn = pymysql.connect(host="127.0.0.1", port=3306, user="root", passwd="sdu2020", charset="utf8", db="quickgpt")
+    conn = pymysql.connect(host=dataset_host, port=3306, user="root", passwd="sdu2020", charset="utf8", db="quickgpt")
     cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
     sql1 = "select * from app"
     cursor.execute(sql1)
@@ -14,7 +14,7 @@ def get_app_data_from_dataset():
 
 def insert_app_data_to_dataset(app_name, app_introduction, prompt, example):
     try:
-        conn = pymysql.connect(host="127.0.0.1", port=3306, user="root", passwd="sdu2020", charset="utf8", db="quickgpt")
+        conn = pymysql.connect(host=dataset_host, port=3306, user="root", passwd="sdu2020", charset="utf8", db="quickgpt")
         cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
         sql1 = "insert into app(app_name, app_introduction, prompt, example) values(%(app_name)s,%(app_introduction)s,%(prompt)s,%(example)s)"
         cursor.execute(sql1, {"app_name": app_name, "app_introduction": app_introduction, "prompt": prompt,"example":example})
