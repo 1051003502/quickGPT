@@ -23,6 +23,9 @@ def get_quickgpt_index2():
 def createAPP():
     return render_template("createAPP.html")
 
+@app.route("/quickgpt/chatGPT")
+def chatGPT():
+    return render_template("chatGPT_index.html")
 
 @app.route("/quickgpt/db/addAPPtoDB", methods=['POST'])
 def addAPPtoDB():
@@ -30,9 +33,15 @@ def addAPPtoDB():
     app_introduction = request.form.get("app_introduction")
     prompt = request.form.get("prompt")
     example = request.form.get("example")
-    isSuccess = insert_app_data_to_dataset(app_name, app_introduction, prompt, example)
-    print(isSuccess)
-    return "成功"
+    if(len(app_name)>15 or len(app_introduction)>150 or len(prompt)>100 or len(example)>100):
+        print("长度太长，app创建失败")
+        return "1"
+    else:
+        isSuccess = insert_app_data_to_dataset(app_name, app_introduction, prompt, example)
+        if(isSuccess):
+            return ""
+        else:
+            return "2"
     # request.form
     pass
 

@@ -78,28 +78,28 @@
                 <div name="div1" class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">APP名字</label>
                     <div class="col-sm-10">
-                        <input type="text" name="app_name"  class="form-control" id="inputName" placeholder="示例：中英文互译">
+                        <input type="text" name="app_name" maxlength="15" class="form-control" id="inputName" placeholder="示例：中英文互译 （最多15字符）">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputIntroduction" class="col-sm-2 control-label">APP介绍</label>
                     <div class="col-sm-10">
-                        <textarea name="app_introduction" class="form-control" rows="3" id="inputIntroduction"
-                                  placeholder="示例：输入中文自动翻译为英文，输入英文自动翻译为中文，自动检测，无需设置"></textarea>
+                        <textarea name="app_introduction" class="form-control" rows="5" id="inputIntroduction"
+                                  placeholder="示例：输入中文自动翻译为英文，输入英文自动翻译为中文，自动检测，无需设置（最多150字符）" maxlength="150"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPrompt" class="col-sm-2 control-label">Prompt</label>
                     <div class="col-sm-10">
                         <textarea name="prompt" class="form-control" rows="3" id="inputPrompt"
-                                  placeholder="示例：请你在之后充当中英文翻译助手，输入中文自动翻译为英文，输入英文自动翻译为中文"></textarea>
+                                  placeholder="示例：请你在之后充当中英文翻译助手，输入中文自动翻译为英文，输入英文自动翻译为中文（最多100字符）" maxlength="100"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPrompt" class="col-sm-2 control-label">例子</label>
                     <div class="col-sm-10">
                         <textarea name="example" class="form-control" rows="3" id="inputExample"
-                                  placeholder="示例：床前明月光，疑是地下霜"></textarea>
+                                  placeholder="示例：床前明月光，疑是地下霜（最多100字符）" maxlength="100"></textarea>
                     </div>
                 </div>
 
@@ -141,9 +141,17 @@
 					data: formData, // 请求的正文数据，即表单数据
 					success: function(response) {
 						// 处理服务器端响应的回调函数
-						alert("表单数据已成功提交！");
-						self.location='/quickgpt/index';
-						console.log(response);
+                        if(response==""){
+                            alert("创建成功！");
+                            self.location='/quickgpt/index';
+                        }
+						else if(response=="1"){
+						    alert("创建失败！");
+                        }
+						else if(response=="2"){
+						    alert("服务器错误！");
+                        }
+
 					},
 					error: function(xhr, status, error) {
 						// 处理请求出错的回调函数

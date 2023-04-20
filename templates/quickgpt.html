@@ -8,12 +8,24 @@
     <link rel="stylesheet" href="/static/plugins/bootstrap-3.4.1-dist/css/bootstrap.css">
     <link rel="stylesheet" href="/static/plugins/fontawesome-free-5.15.4-web/css/all.css">
     <style>
-        .copyright{
+        .copyright {
             background-color: #5e5e5e;
             height: 50px;
             color: white;
             text-align: center;
             line-height: 50px;
+        }
+
+        .thumbnail:hover {
+            /* 设置边框样式，包括颜色、宽度和样式 */
+            /*border: 1px solid #6495ED;*/
+            /* 添加金色光特效，使用box-shadow属性 */
+            box-shadow: 0 0 6px #6495ED;
+            cursor: pointer;
+        }
+
+        .set_width {
+            width: 1500px;
         }
     </style>
 
@@ -79,11 +91,21 @@
 
 </nav>
 
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="text-center">ChatGPT</h1>
+        <p class="text-center">来和ChatGPT聊天吧！</p>
+        <p class="text-center">
+            <a class="btn btn-primary btn-lg" href="/quickgpt/chatGPT" role="button">开始聊天</a>
+        </p>
+
+    </div>
+</div>
 
 <div class="jumbotron">
     <div class="container">
         <h1 class="text-center">Quick GPT</h1>
-        <p class="text-center"><i class="fa fa-th-list" aria-hidden="true"></i>快速创建你的GPT应用！</p>
+        <p class="text-center">基于prompt快速创建你的专属GPT应用！</p>
         <p class="text-center">
             <a class="btn btn-primary btn-lg" href="/quickgpt/createAPP" role="button">开始创建</a>
         </p>
@@ -91,50 +113,50 @@
     </div>
 </div>
 
-<div class="container" >
+<div class="container set_width">
 
 
-<div class="row">
+    <div class="row">
 
-    {% for dic in app_data %}
+        {% for dic in app_data %}
 
-    <div class="col-md-3">
-        <div class="thumbnail" onclick="chat(this)" app_id={{dic.id}} app_name={{dic.app_name}}
-             app_introduction={{dic.app_introduction}} app_prompt={{dic.prompt}} app_example={{dic.example}}>
-            <div class="caption">
-                <h3>{{dic.app_name}} </h3>
-                <p style="overflow:hidden;height: 80px">{{dic.app_introduction}}</p>
-                <p class="text-center"><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#"
-                                                                                                       class="btn btn-default"
-                                                                                                       role="button">Button</a>
-                </p>
+        <div class="col-md-3">
+            <div class="thumbnail" onclick="chat(this)" app_id={{dic.id}} app_name={{dic.app_name}}
+                 app_introduction={{dic.app_introduction}} app_prompt={{dic.prompt}} app_example={{dic.example}}>
+                <div class="caption">
+                    <h4 style="overflow:hidden;white-space: nowrap">{{dic.app_name}} </h4>
+                    <p style="overflow:hidden;height: 115px">{{dic.app_introduction}}</p>
+                    <p class="text-center"><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#"
+                                                                                                           class="btn btn-default"
+                                                                                                           role="button">Button</a>
+                    </p>
+                </div>
             </div>
         </div>
+        {% endfor%}
+
+
     </div>
-    {% endfor%}
-
-
-</div>
 </div>
 <div class="copyright">
-蓝精灵 版权所有 Copyright  2023
+    蓝精灵 版权所有 Copyright 2023
 </div>
 
 <script src="/static/js/jquery-3.6.4.js"></script>
 <script src="/static/plugins/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
 
 <script>
-        function chat(self) {
-            console.log($(self).attr("app_id"));
-            console.log("chat()");
-            window.location.href="/quickgpt/chat?"+
-                "app_id="+$(self).attr("app_id")+"&"+
-                "app_name="+$(self).attr("app_name")+"&"+
-                "app_introduction="+$(self).attr("app_introduction")+"&"+
-                "app_prompt="+$(self).attr("app_prompt")+"&"+
-                "app_example="+$(self).attr("app_example");
+    function chat(self) {
+        console.log($(self).attr("app_id"));
+        console.log("chat()");
+        window.location.href = "/quickgpt/chat?" +
+            "app_id=" + $(self).attr("app_id") + "&" +
+            "app_name=" + $(self).attr("app_name") + "&" +
+            "app_introduction=" + $(self).attr("app_introduction") + "&" +
+            "app_prompt=" + $(self).attr("app_prompt") + "&" +
+            "app_example=" + $(self).attr("app_example");
 
-        }
+    }
 </script>
 </body>
 </html>
